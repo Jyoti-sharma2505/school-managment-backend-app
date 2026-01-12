@@ -26,10 +26,10 @@ app.get("/students", async (req, res) => {
 });
 
 app.post("/students", async (req, res) => {
-  const { name, age, grade } = req.body;
+  const { name, age, grade, gender,attendance,marks } = req.body;
 
   try {
-    const student = new Student({ name, age, grade });
+    const student = new Student({ name, age, grade,gender,attendance,marks });
     await student.save();
     res.status(201).json(student);
   } catch (error) {
@@ -63,7 +63,7 @@ app.delete("/students/:id", async (req, res) => {
   const studentId = req.params.id;
 
   try {
-    const deletedStudent = await Student.findByIdAndRemove(studentId);
+    const deletedStudent = await Student.findByIdAndDelete(studentId);
 
     if (!deletedStudent) {
       return res.status(404).json({ error: "Student not found" });
